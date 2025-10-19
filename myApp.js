@@ -22,6 +22,28 @@ module.exports = app;
 //prevent MIME Stiffing
 app.use(helmet.noSniff());
 
+//stop untrusted https
+app.use(helmet.ieNoOpen());
+
+//use https:
+var timeInSeconds = 90*24*60*60;
+app.use(helmet.hsts(
+  {
+    maxAge:timeInSeconds,
+    force: true
+  }
+));
+
+//disable DNS Prefetching
+
+app.use(helmet.dnsPrefetchControl());
+
+// disable chache
+app.use(helmet.noCache());
+
+//add content secuirty
+app.use(helmet.contentSecurityPolicy({ directives: { defaultSrc: ["'self'"], scriptSrc: ["'self'", "trusted-cdn.com"] }} ))
+
 const api = require('./server.js');
 app.use(express.static('public'));
 app.disable('strict-transport-security');
