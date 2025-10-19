@@ -15,7 +15,13 @@ app.use(helmet.frameguard({
 // sanitize a users input to prevent XSS files
 app.use(helmet.xssFilter());
 
+
+// Export early to avoid circular dependency issues with server.js requiring this file
 module.exports = app;
+
+//prevent MIME Stiffing
+app.use(helmet.noSniff());
+
 const api = require('./server.js');
 app.use(express.static('public'));
 app.disable('strict-transport-security');
