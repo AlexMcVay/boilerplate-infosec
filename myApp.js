@@ -44,6 +44,26 @@ app.use(helmet.noCache());
 //add content secuirty
 app.use(helmet.contentSecurityPolicy({ directives: { defaultSrc: ["'self'"], scriptSrc: ["'self'", "trusted-cdn.com"] }} ))
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const api = require('./server.js');
 app.use(express.static('public'));
 app.disable('strict-transport-security');
